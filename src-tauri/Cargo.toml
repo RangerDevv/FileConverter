@@ -26,3 +26,24 @@ pdf-extract = "0.7"
 mime_guess = "2"
 encoding_rs = "0.8"
 csv = "1.3"
+
+# Spreadsheet support
+calamine = "0.26"
+
+# Archive support
+zip = "2.2"
+tar = "0.4"
+flate2 = "1.0"
+
+# SVG support
+resvg = "0.44"
+
+# Markup/Data conversion
+quick-xml = { version = "0.37", features = ["serialize"] }
+serde_yaml = "0.9"
+toml = "0.8"
+pulldown-cmark = "0.12"
+
+# Document support
+docx-rs = "0.4"
+epub = "2.1"

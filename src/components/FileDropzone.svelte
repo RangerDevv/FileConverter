@@ -12,20 +12,39 @@
         {
           name: 'All Supported Files',
           extensions: [
+            // Images
             'png', 'jpg', 'jpeg', 'gif', 'bmp', 'ico', 'webp', 'tiff', 'tif', 'avif',
-            'pdf',
+            // Vector Graphics
+            'svg',
+            // Documents
+            'pdf', 'docx', 'epub', 'rtf',
+            // Text
             'txt', 'md', 'markdown', 'rst', 'log',
+            // Data/Markup
             'json', 'xml', 'yaml', 'yml', 'toml', 'ini', 'cfg', 'conf',
-            'csv', 'tsv',
+            // Spreadsheets
+            'csv', 'tsv', 'xlsx', 'xls', 'ods',
+            // Web
             'html', 'htm', 'xhtml',
+            // Archives
+            'zip', 'tar', 'gz',
+            // Audio
+            'mp3', 'wav', 'ogg', 'flac', 'aac', 'm4a', 'wma',
+            // Video
+            'mp4', 'avi', 'mkv', 'mov', 'wmv', 'flv', 'webm',
+            // Code (text-based)
             'css', 'scss', 'sass', 'less',
             'js', 'ts', 'jsx', 'tsx', 'mjs', 'cjs',
             'py', 'rb', 'php', 'java', 'c', 'cpp', 'h', 'hpp', 'rs', 'go', 'swift'
           ]
         },
-        { name: 'Images', extensions: ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'ico', 'webp', 'tiff', 'avif'] },
-        { name: 'Documents', extensions: ['pdf', 'txt', 'md', 'html'] },
-        { name: 'Data Files', extensions: ['json', 'csv', 'xml', 'yaml', 'yml'] },
+        { name: 'Images', extensions: ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'ico', 'webp', 'tiff', 'avif', 'svg'] },
+        { name: 'Audio', extensions: ['mp3', 'wav', 'ogg', 'flac', 'aac', 'm4a', 'wma'] },
+        { name: 'Video', extensions: ['mp4', 'avi', 'mkv', 'mov', 'wmv', 'flv', 'webm'] },
+        { name: 'Documents', extensions: ['pdf', 'docx', 'epub', 'rtf', 'txt', 'md', 'html'] },
+        { name: 'Spreadsheets', extensions: ['xlsx', 'xls', 'ods', 'csv'] },
+        { name: 'Data Files', extensions: ['json', 'csv', 'xml', 'yaml', 'yml', 'toml'] },
+        { name: 'Archives', extensions: ['zip', 'tar', 'gz'] },
         { name: 'All Files', extensions: ['*'] }
       ]
     });
@@ -84,16 +103,25 @@
     
     <div class="supported-formats">
       <span class="format-group">
-        <strong>Images:</strong> PNG, JPG, GIF, WebP, BMP, ICO, TIFF
+        <strong>Images:</strong> PNG, JPG, GIF, WebP, SVG, TIFF
       </span>
       <span class="format-group">
-        <strong>Documents:</strong> PDF, TXT, MD, HTML
+        <strong>Audio:</strong> MP3, WAV, OGG, FLAC, AAC
       </span>
       <span class="format-group">
-        <strong>Data:</strong> JSON, CSV, XML, YAML
+        <strong>Video:</strong> MP4, AVI, MKV, MOV, WebM
       </span>
       <span class="format-group">
-        <strong>Code:</strong> JS, TS, PY, RS, and more
+        <strong>Documents:</strong> PDF, DOCX, EPUB, RTF
+      </span>
+      <span class="format-group">
+        <strong>Spreadsheets:</strong> XLSX, XLS, ODS, CSV
+      </span>
+      <span class="format-group">
+        <strong>Data:</strong> JSON, XML, YAML, TOML
+      </span>
+      <span class="format-group">
+        <strong>Archives:</strong> ZIP, TAR, GZ
       </span>
     </div>
   </div>

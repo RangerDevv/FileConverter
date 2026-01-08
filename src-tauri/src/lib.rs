@@ -53,23 +53,55 @@ impl FileInfo {
 
 pub fn get_file_type(extension: &str) -> String {
     match extension.to_lowercase().as_str() {
+        // Images
         "png" | "jpg" | "jpeg" | "gif" | "bmp" | "ico" | "tiff" | "tif" | "webp" | "avif" => "image".to_string(),
+        // SVG (vector)
+        "svg" => "svg".to_string(),
+        // PDF
         "pdf" => "pdf".to_string(),
-        "txt" | "md" | "markdown" | "rst" | "log" => "text".to_string(),
-        "json" | "xml" | "yaml" | "yml" | "toml" | "ini" | "cfg" | "conf" => "config".to_string(),
+        // Text
+        "txt" | "log" => "text".to_string(),
+        // Markdown
+        "md" | "markdown" | "rst" => "markdown".to_string(),
+        // Config/Data formats
+        "json" => "json".to_string(),
+        "xml" => "xml".to_string(),
+        "yaml" | "yml" => "yaml".to_string(),
+        "toml" => "toml".to_string(),
+        "ini" | "cfg" | "conf" => "config".to_string(),
+        // Data files
         "csv" | "tsv" => "data".to_string(),
+        // HTML
         "html" | "htm" | "xhtml" => "html".to_string(),
+        // Style
         "css" | "scss" | "sass" | "less" => "style".to_string(),
+        // Script
         "js" | "ts" | "jsx" | "tsx" | "mjs" | "cjs" => "script".to_string(),
+        // Code
         "py" | "rb" | "php" | "java" | "c" | "cpp" | "h" | "hpp" | "rs" | "go" | "swift" => "code".to_string(),
-        "doc" | "docx" => "document".to_string(),
-        "xls" | "xlsx" => "spreadsheet".to_string(),
+        // Documents
+        "doc" | "docx" => "docx".to_string(),
+        "rtf" => "rtf".to_string(),
+        "epub" => "epub".to_string(),
+        "odt" => "odt".to_string(),
+        // Spreadsheets
+        "xls" | "xlsx" => "xlsx".to_string(),
+        "ods" => "ods".to_string(),
+        // Archives
+        "zip" => "zip".to_string(),
+        "tar" => "tar".to_string(),
+        "gz" | "tgz" => "gzip".to_string(),
+        // Audio
+        "mp3" | "wav" | "ogg" | "flac" | "aac" | "m4a" | "wma" => "audio".to_string(),
+        // Video
+        "mp4" | "mkv" | "avi" | "mov" | "webm" => "video".to_string(),
         _ => "unknown".to_string(),
     }
 }
 
 pub fn get_supported_outputs(file_type: &str, _extension: &str) -> Vec<String> {
     match file_type {
+        // Images
         "image" => vec![
             "png".to_string(),
             "jpg".to_string(),
@@ -79,27 +111,124 @@ pub fn get_supported_outputs(file_type: &str, _extension: &str) -> Vec<String> {
             "ico".to_string(),
             "webp".to_string(),
         ],
+        // SVG
+        "svg" => vec![
+            "png".to_string(),
+            "jpg".to_string(),
+        ],
+        // PDF
         "pdf" => vec![
             "txt".to_string(),
             "png".to_string(),
             "jpg".to_string(),
         ],
+        // Text
         "text" | "config" | "code" | "script" | "style" => vec![
             "txt".to_string(),
             "md".to_string(),
             "pdf".to_string(),
             "html".to_string(),
         ],
+        // Markdown
+        "markdown" => vec![
+            "html".to_string(),
+            "pdf".to_string(),
+            "txt".to_string(),
+        ],
+        // HTML
         "html" => vec![
             "txt".to_string(),
             "md".to_string(),
             "pdf".to_string(),
         ],
+        // JSON
+        "json" => vec![
+            "yaml".to_string(),
+            "toml".to_string(),
+            "xml".to_string(),
+            "csv".to_string(),
+            "txt".to_string(),
+        ],
+        // YAML
+        "yaml" => vec![
+            "json".to_string(),
+            "toml".to_string(),
+            "txt".to_string(),
+        ],
+        // TOML
+        "toml" => vec![
+            "json".to_string(),
+            "yaml".to_string(),
+            "txt".to_string(),
+        ],
+        // XML
+        "xml" => vec![
+            "json".to_string(),
+            "txt".to_string(),
+        ],
+        // Data (CSV/TSV)
         "data" => vec![
             "json".to_string(),
             "csv".to_string(),
             "txt".to_string(),
             "html".to_string(),
+        ],
+        // Documents (DOCX)
+        "docx" => vec![
+            "txt".to_string(),
+            "html".to_string(),
+            "pdf".to_string(),
+        ],
+        // RTF
+        "rtf" => vec![
+            "txt".to_string(),
+            "html".to_string(),
+        ],
+        // EPUB
+        "epub" => vec![
+            "txt".to_string(),
+            "html".to_string(),
+        ],
+        // ODT
+        "odt" => vec![
+            "txt".to_string(),
+            "pdf".to_string(),
+        ],
+        // Spreadsheets (XLSX/XLS)
+        "xlsx" => vec![
+            "csv".to_string(),
+            "json".to_string(),
+            "html".to_string(),
+        ],
+        // ODS
+        "ods" => vec![
+            "csv".to_string(),
+            "json".to_string(),
+            "html".to_string(),
+        ],
+        // Archives
+        "zip" | "tar" | "gzip" => vec![
+            "json".to_string(),  // List contents
+            "folder".to_string(), // Extract
+        ],
+        // Audio
+        "audio" => vec![
+            "mp3".to_string(),
+            "wav".to_string(),
+            "ogg".to_string(),
+            "flac".to_string(),
+            "aac".to_string(),
+            "m4a".to_string(),
+        ],
+        // Video
+        "video" => vec![
+            "mp4".to_string(),
+            "mkv".to_string(),
+            "webm".to_string(),
+            "avi".to_string(),
+            "mov".to_string(),
+            "gif".to_string(),
+            "mp3".to_string(), // Extract audio
         ],
         _ => vec!["txt".to_string()],
     }

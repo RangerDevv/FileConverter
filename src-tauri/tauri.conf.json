@@ -9,6 +9,12 @@
     "beforeBuildCommand": "npm run build",
     "frontendDist": "../dist"
   },
+  "bundle": {
+    "externalBin": [
+      "binaries/ffmpeg",
+      "binaries/ffprobe"
+    ]
+  },
   "app": {
     "withGlobalTauri": true,
     "windows": [

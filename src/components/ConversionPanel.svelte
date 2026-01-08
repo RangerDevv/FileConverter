@@ -63,6 +63,7 @@
 
   function getFormatDescription(format) {
     const descriptions = {
+      // Images
       png: 'Lossless, supports transparency',
       jpg: 'Smaller size, lossy compression',
       jpeg: 'Smaller size, lossy compression',
@@ -70,12 +71,46 @@
       webp: 'Modern format, great compression',
       bmp: 'Uncompressed bitmap',
       ico: 'Icon format',
+      tiff: 'High quality, lossless',
+      avif: 'Next-gen image format',
+      // Documents
       pdf: 'Portable document format',
       txt: 'Plain text',
       md: 'Markdown format',
       html: 'Web page format',
+      docx: 'Word document',
+      epub: 'E-book format',
+      rtf: 'Rich text format',
+      // Data
       json: 'Structured data format',
       csv: 'Spreadsheet compatible',
+      xml: 'Extensible markup',
+      yaml: 'Human-readable data',
+      toml: 'Config file format',
+      // Spreadsheets
+      xlsx: 'Excel spreadsheet',
+      xls: 'Legacy Excel format',
+      ods: 'OpenDocument spreadsheet',
+      // Audio
+      mp3: 'Universal audio format',
+      wav: 'Uncompressed audio',
+      ogg: 'Open audio format',
+      flac: 'Lossless audio',
+      aac: 'Advanced audio codec',
+      m4a: 'Apple audio format',
+      // Video
+      mp4: 'Universal video format',
+      avi: 'Windows video format',
+      mkv: 'Matroska video',
+      mov: 'Apple video format',
+      webm: 'Web video format',
+      // Archives
+      zip: 'Compressed archive',
+      tar: 'Tape archive',
+      gz: 'Gzip compressed',
+      // Extract
+      extract: 'Extract archive contents',
+      list: 'List archive contents',
     };
     return descriptions[format] || '';
   }
