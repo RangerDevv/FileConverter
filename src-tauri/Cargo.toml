@@ -1,12 +1,12 @@
 [package]
-name = "file-converter"
+name = "fileflow"
 version = "1.0.0"
-description = "A powerful local file converter"
+description = "FileFlow - A powerful local file converter"
 authors = ["you"]
 edition = "2021"
 
 [lib]
-name = "file_converter_lib"
+name = "fileflow_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]

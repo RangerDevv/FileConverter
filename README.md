@@ -1,8 +1,8 @@
-# File Converter
+# FileFlow
 
 A powerful, local file converter built with Tauri and Svelte. Convert images, PDFs, text files, data files, and more - all processed locally on your machine for privacy and speed.
 
-![File Converter](https://img.shields.io/badge/Made%20with-Tauri%20%2B%20Svelte-blue)
+![FileFlow](https://img.shields.io/badge/Made%20with-Tauri%20%2B%20Svelte-blue)
 
 ## Features
 

@@ -12,7 +12,7 @@
       </svg>
     </div>
     <div class="logo-text">
-      <h1>File Converter</h1>
+      <h1>FileFlow</h1>
       <span class="tagline">Local • Fast • Private</span>
     </div>
   </div>

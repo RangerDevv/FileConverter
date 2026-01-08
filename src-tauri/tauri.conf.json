@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "File Converter",
+  "productName": "FileFlow",
   "version": "1.0.0",
-  "identifier": "com.fileconverter.app",
+  "identifier": "com.fileflow.app",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
@@ -13,7 +13,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "File Converter",
+        "title": "FileFlow",
         "width": 1100,
         "height": 750,
         "resizable": true,

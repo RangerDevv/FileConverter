@@ -15,7 +15,7 @@ fn get_install_instructions() -> String {
         Ubuntu/Debian:\n  sudo apt update && sudo apt install ffmpeg\n\n\
         Fedora:\n  sudo dnf install ffmpeg\n\n\
         Arch Linux:\n  sudo pacman -S ffmpeg\n\n\
-        After installing, restart File Converter.".to_string()
+        After installing, restart FileFlow.".to_string()
     }
     
     #[cfg(target_os = "macos")]
@@ -23,7 +23,7 @@ fn get_install_instructions() -> String {
         "ffmpeg is not installed. To install ffmpeg on macOS:\n\n\
         Using Homebrew (recommended):\n  brew install ffmpeg\n\n\
         If you don't have Homebrew, install it first:\n  /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"\n\n\
-        After installing, restart File Converter.".to_string()
+        After installing, restart FileFlow.".to_string()
     }
     
     #[cfg(target_os = "windows")]
@@ -32,7 +32,7 @@ fn get_install_instructions() -> String {
         Option 1 - Using winget (Windows 10/11):\n  winget install ffmpeg\n\n\
         Option 2 - Using Chocolatey:\n  choco install ffmpeg\n\n\
         Option 3 - Manual install:\n  1. Download from https://www.gyan.dev/ffmpeg/builds/\n  2. Extract to C:\\ffmpeg\n  3. Add C:\\ffmpeg\\bin to your PATH environment variable\n\n\
-        After installing, restart File Converter.".to_string()
+        After installing, restart FileFlow.".to_string()
     }
     
     #[cfg(not(any(target_os = "linux", target_os = "macos", target_os = "windows")))]
