@@ -1,6 +1,4 @@
 use std::process::Command;
-use std::path::PathBuf;
-use std::env;
 use crate::ConversionResult;
 
 /// Audio formats supported
@@ -9,79 +7,44 @@ const AUDIO_FORMATS: &[&str] = &["mp3", "wav", "ogg", "flac", "aac", "m4a", "wma
 /// Video formats supported
 const VIDEO_FORMATS: &[&str] = &["mp4", "mkv", "avi", "mov", "webm", "gif"];
 
-/// Get the path to the bundled ffmpeg binary
-fn get_ffmpeg_path() -> PathBuf {
-    // In development, use the binaries folder directly
-    // In production, Tauri places sidecar binaries next to the executable
-    let exe_dir = env::current_exe()
-        .ok()
-        .and_then(|p| p.parent().map(|p| p.to_path_buf()))
-        .unwrap_or_default();
-    
-    // Try bundled binary first (with platform-specific suffix)
+/// Get installation instructions based on the current OS
+fn get_install_instructions() -> String {
     #[cfg(target_os = "linux")]
-    let binary_name = "ffmpeg-x86_64-unknown-linux-gnu";
+    {
+        "ffmpeg is not installed. To install ffmpeg on Linux:\n\n\
+        Ubuntu/Debian:\n  sudo apt update && sudo apt install ffmpeg\n\n\
+        Fedora:\n  sudo dnf install ffmpeg\n\n\
+        Arch Linux:\n  sudo pacman -S ffmpeg\n\n\
+        After installing, restart File Converter.".to_string()
+    }
+    
     #[cfg(target_os = "macos")]
-    let binary_name = "ffmpeg-x86_64-apple-darwin";
+    {
+        "ffmpeg is not installed. To install ffmpeg on macOS:\n\n\
+        Using Homebrew (recommended):\n  brew install ffmpeg\n\n\
+        If you don't have Homebrew, install it first:\n  /bin/bash -c \"$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\"\n\n\
+        After installing, restart File Converter.".to_string()
+    }
+    
     #[cfg(target_os = "windows")]
-    let binary_name = "ffmpeg-x86_64-pc-windows-msvc.exe";
-    
-    let bundled_path = exe_dir.join(binary_name);
-    
-    if bundled_path.exists() {
-        return bundled_path;
+    {
+        "ffmpeg is not installed. To install ffmpeg on Windows:\n\n\
+        Option 1 - Using winget (Windows 10/11):\n  winget install ffmpeg\n\n\
+        Option 2 - Using Chocolatey:\n  choco install ffmpeg\n\n\
+        Option 3 - Manual install:\n  1. Download from https://www.gyan.dev/ffmpeg/builds/\n  2. Extract to C:\\ffmpeg\n  3. Add C:\\ffmpeg\\bin to your PATH environment variable\n\n\
+        After installing, restart File Converter.".to_string()
     }
     
-    // Try development path
-    let dev_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .join("binaries")
-        .join(binary_name);
-    
-    if dev_path.exists() {
-        return dev_path;
+    #[cfg(not(any(target_os = "linux", target_os = "macos", target_os = "windows")))]
+    {
+        "ffmpeg is not installed. Please install ffmpeg for your operating system and ensure it's available in your PATH.\n\n\
+        Visit https://ffmpeg.org/download.html for download options.".to_string()
     }
-    
-    // Fall back to system ffmpeg
-    PathBuf::from("ffmpeg")
 }
 
-/// Get the path to the bundled ffprobe binary
-fn get_ffprobe_path() -> PathBuf {
-    let exe_dir = env::current_exe()
-        .ok()
-        .and_then(|p| p.parent().map(|p| p.to_path_buf()))
-        .unwrap_or_default();
-    
-    #[cfg(target_os = "linux")]
-    let binary_name = "ffprobe-x86_64-unknown-linux-gnu";
-    #[cfg(target_os = "macos")]
-    let binary_name = "ffprobe-x86_64-apple-darwin";
-    #[cfg(target_os = "windows")]
-    let binary_name = "ffprobe-x86_64-pc-windows-msvc.exe";
-    
-    let bundled_path = exe_dir.join(binary_name);
-    
-    if bundled_path.exists() {
-        return bundled_path;
-    }
-    
-    // Try development path
-    let dev_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .join("binaries")
-        .join(binary_name);
-    
-    if dev_path.exists() {
-        return dev_path;
-    }
-    
-    // Fall back to system ffprobe
-    PathBuf::from("ffprobe")
-}
-
-/// Check if ffmpeg is available (bundled or system)
+/// Check if ffmpeg is available
 pub fn is_ffmpeg_available() -> bool {
-    let ffmpeg_path = get_ffmpeg_path();
-    Command::new(&ffmpeg_path)
+    Command::new("ffmpeg")
         .arg("-version")
         .output()
         .map(|o| o.status.success())
@@ -90,13 +53,11 @@ pub fn is_ffmpeg_available() -> bool {
 
 /// Convert audio file to another audio format using ffmpeg
 pub fn convert_audio(input_path: &str, output_path: &str, output_format: &str) -> ConversionResult {
-    let ffmpeg_path = get_ffmpeg_path();
-    
     if !is_ffmpeg_available() {
         return ConversionResult {
             success: false,
             output_path: None,
-            error: Some("ffmpeg is not available. The bundled ffmpeg binary may be missing.".to_string()),
+            error: Some(get_install_instructions()),
             data: None,
         };
     }
@@ -128,7 +89,7 @@ pub fn convert_audio(input_path: &str, output_path: &str, output_format: &str) -
 
     args.push(output_path);
 
-    let result = Command::new(&ffmpeg_path)
+    let result = Command::new("ffmpeg")
         .args(&args)
         .output();
 
@@ -162,13 +123,11 @@ pub fn convert_audio(input_path: &str, output_path: &str, output_format: &str) -
 
 /// Convert video file to another video format using ffmpeg
 pub fn convert_video(input_path: &str, output_path: &str, output_format: &str) -> ConversionResult {
-    let ffmpeg_path = get_ffmpeg_path();
-    
     if !is_ffmpeg_available() {
         return ConversionResult {
             success: false,
             output_path: None,
-            error: Some("ffmpeg is not available. The bundled ffmpeg binary may be missing.".to_string()),
+            error: Some(get_install_instructions()),
             data: None,
         };
     }
@@ -196,7 +155,7 @@ pub fn convert_video(input_path: &str, output_path: &str, output_format: &str) -
             args.extend(&["-codec:v", "libx264", "-preset", "medium", "-crf", "23", "-codec:a", "aac"]);
         }
         "gif" => {
-            // For GIF, we need special handling - create a palette first
+            // For GIF, we need special handling
             args.extend(&["-vf", "fps=10,scale=480:-1:flags=lanczos", "-loop", "0"]);
         }
         _ => {}
@@ -204,7 +163,7 @@ pub fn convert_video(input_path: &str, output_path: &str, output_format: &str) -
 
     args.push(output_path);
 
-    let result = Command::new(&ffmpeg_path)
+    let result = Command::new("ffmpeg")
         .args(&args)
         .output();
 
@@ -238,13 +197,11 @@ pub fn convert_video(input_path: &str, output_path: &str, output_format: &str) -
 
 /// Extract audio from video file
 pub fn extract_audio_from_video(input_path: &str, output_path: &str, audio_format: &str) -> ConversionResult {
-    let ffmpeg_path = get_ffmpeg_path();
-    
     if !is_ffmpeg_available() {
         return ConversionResult {
             success: false,
             output_path: None,
-            error: Some("ffmpeg is not available. The bundled ffmpeg binary may be missing.".to_string()),
+            error: Some(get_install_instructions()),
             data: None,
         };
     }
@@ -277,7 +234,7 @@ pub fn extract_audio_from_video(input_path: &str, output_path: &str, audio_forma
 
     args.push(output_path);
 
-    let result = Command::new(&ffmpeg_path)
+    let result = Command::new("ffmpeg")
         .args(&args)
         .output();
 
@@ -311,9 +268,7 @@ pub fn extract_audio_from_video(input_path: &str, output_path: &str, audio_forma
 
 /// Get media file information using ffprobe
 pub fn get_media_info(input_path: &str) -> Result<MediaInfo, String> {
-    let ffprobe_path = get_ffprobe_path();
-    
-    let result = Command::new(&ffprobe_path)
+    let result = Command::new("ffprobe")
         .args([
             "-v", "quiet",
             "-print_format", "json",
@@ -327,7 +282,6 @@ pub fn get_media_info(input_path: &str) -> Result<MediaInfo, String> {
         Ok(output) => {
             if output.status.success() {
                 let json_str = String::from_utf8_lossy(&output.stdout);
-                // Parse basic info from ffprobe output
                 let info: serde_json::Value = serde_json::from_str(&json_str)
                     .map_err(|e| format!("Failed to parse ffprobe output: {}", e))?;
                 
