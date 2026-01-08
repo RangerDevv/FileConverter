@@ -1,7 +1,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-use file_converter_lib::converters::*;
-use file_converter_lib::*;
+use fileflow_lib::converters::*;
+use fileflow_lib::*;
 use std::fs;
 use std::path::Path;
 
