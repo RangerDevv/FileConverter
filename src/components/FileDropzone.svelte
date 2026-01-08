@@ -1,9 +1,36 @@
 <script>
   import { open } from '@tauri-apps/plugin-dialog';
+  import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
+  import { onMount, onDestroy } from 'svelte';
 
   let { onfileselected } = $props();
   
   let isDragging = $state(false);
+  let unlisten = null;
+
+  onMount(async () => {
+    // Listen for Tauri's native drag-drop events
+    const webview = getCurrentWebviewWindow();
+    unlisten = await webview.onDragDropEvent((event) => {
+      if (event.payload.type === 'over') {
+        isDragging = true;
+      } else if (event.payload.type === 'leave') {
+        isDragging = false;
+      } else if (event.payload.type === 'drop') {
+        isDragging = false;
+        const paths = event.payload.paths;
+        if (paths && paths.length > 0) {
+          onfileselected({ detail: { path: paths[0] } });
+        }
+      }
+    });
+  });
+
+  onDestroy(() => {
+    if (unlisten) {
+      unlisten();
+    }
+  });
 
   async function handleBrowse() {
     const file = await open({
@@ -56,25 +83,15 @@
 
   function handleDragOver(e) {
     e.preventDefault();
-    isDragging = true;
   }
 
   function handleDragLeave(e) {
     e.preventDefault();
-    isDragging = false;
   }
 
-  async function handleDrop(e) {
+  function handleDrop(e) {
     e.preventDefault();
-    isDragging = false;
-    
-    const files = e.dataTransfer?.files;
-    if (files && files.length > 0) {
-      const file = files[0];
-      // For drag and drop, we need to use the file picker
-      // since we can't get the full path from the browser API
-      await handleBrowse();
-    }
+    // Tauri's onDragDropEvent handles the actual file drop
   }
 </script>
 
