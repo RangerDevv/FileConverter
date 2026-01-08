@@ -1,0 +1,4 @@
+# Optionally configure faster linking if available
+# Uncomment the following if you have lld installed:
+# [build]
+# rustflags = ["-C", "link-arg=-fuse-ld=lld"]
