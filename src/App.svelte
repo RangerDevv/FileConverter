@@ -1,10 +1,10 @@
 <script>
+    import { invoke } from '@tauri-apps/api/core';
   import FileDropzone from './components/FileDropzone.svelte';
   import FileCard from './components/FileCard.svelte';
   import ConversionPanel from './components/ConversionPanel.svelte';
   import Toast from './components/Toast.svelte';
   import Header from './components/Header.svelte';
-  import { invoke } from '@tauri-apps/api/core';
 
   let selectedFile = $state(null);
   let fileInfo = $state(null);
