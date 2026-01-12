@@ -77,3 +77,38 @@ jobs:
           releaseBody: 'See the assets below to download the app for your platform.'
           releaseDraft: false
           prerelease: false
+      
+      - name: Upload AppImage Artifact
+        if: matrix.platform == 'ubuntu-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: AppImage
+          path: src-tauri/target/release/bundle/appimage/*.AppImage*
+      
+      - name: Upload macOS DMG Artifact
+        if: matrix.platform == 'macos-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: macOS-DMG-${{ matrix.args }}
+          path: src-tauri/target/*/release/bundle/dmg/*.dmg
+      
+      - name: Upload macOS App Artifact
+        if: matrix.platform == 'macos-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: macOS-App-${{ matrix.args }}
+          path: src-tauri/target/*/release/bundle/macos/*.app
+      
+      - name: Upload Windows MSI Artifact
+        if: matrix.platform == 'windows-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows-MSI
+          path: src-tauri/target/release/bundle/msi/*.msi
+      
+      - name: Upload Windows EXE Artifact
+        if: matrix.platform == 'windows-latest'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows-EXE
+          path: src-tauri/target/release/bundle/nsis/*.exe
