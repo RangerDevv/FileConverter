@@ -71,10 +71,9 @@ jobs:
           # TAURI_SIGNING_PRIVATE_KEY: ${{ secrets. TAURI_SIGNING_PRIVATE_KEY }} # Uncomment for code signing
           # TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets. TAURI_SIGNING_PRIVATE_KEY_PASSWORD }} # Uncomment for code signing
         with: 
-          args: "${{ matrix.args }} --no-bundle"
+          args: "${{ matrix.args }}"
           tagName: ${{ github.event.inputs.version || 'v1.0.0' }}
           releaseName: "FileFlow ${{ github.event.inputs.version || 'v1.0.0' }}"
           releaseBody: 'See the assets below to download the app for your platform.'
           releaseDraft: false
           prerelease: false
-          uploadPlainBinary: true
