@@ -47,6 +47,10 @@ jobs:
         if: matrix.platform == 'macos-latest' && matrix.args == '--target aarch64-apple-darwin'
         run: rustup target add aarch64-apple-darwin
       
+      - name: Install x86_64 target for macOS
+        if: matrix.platform == 'macos-latest' && matrix.args == '--target x86_64-apple-darwin'
+        run: rustup target add x86_64-apple-darwin
+      
       - name: Install NSIS on Linux
         if: matrix.platform == 'ubuntu-latest'
         run: sudo apt install nsis # Required for Windows installer on Linux
