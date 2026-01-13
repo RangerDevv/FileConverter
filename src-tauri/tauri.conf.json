@@ -28,5 +28,37 @@
       "csp": null
     }
   },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "publisher": "FileFlow",
+    "copyright": "Copyright (c) 2026",
+    "category": "Utility",
+    "shortDescription": "File format converter",
+    "longDescription": "A powerful file format converter supporting multiple formats",
+    "linux": {
+      "deb": {
+        "depends": []
+      }
+    },
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": ""
+    },
+    "macOS": {
+      "frameworks": [],
+      "minimumSystemVersion": "10.13",
+      "entitlements": null,
+      "exceptionDomain": ""
+    }
+  },
   "plugins": {}
 }
